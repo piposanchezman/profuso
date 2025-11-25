@@ -8,7 +8,8 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # Copiar archivos de dependencias
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
+COPY pnpm-lock.yaml* ./
 
 # ============================================
 # Etapa de dependencias
@@ -16,7 +17,7 @@ COPY package.json pnpm-lock.yaml ./
 FROM base AS deps
 
 # Instalar todas las dependencias (incluyendo devDependencies para el build)
-RUN pnpm install --frozen-lockfile
+RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install; fi
 
 # ============================================
 # Etapa de construcción
