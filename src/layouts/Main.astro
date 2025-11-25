@@ -16,7 +16,7 @@ const {
   description = "Soluciones integrales para proyectos industriales, urbanos y rurales",
 } = Astro.props as Props;
 
-const maintenanceMode = import.meta.env.MAINTENANCE_MODE === "true";
+const maintenanceMode = (process.env.MAINTENANCE_MODE || import.meta.env.MAINTENANCE_MODE) === "true";
 ---
 
 <html lang="es" class="scroll-smooth" data-theme="dark">

@@ -194,7 +194,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Validación de variables de entorno
-    if (!import.meta.env.SMTP_USER || !import.meta.env.SMTP_PASS) {
+    const smtpUser = process.env.SMTP_USER || import.meta.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS || import.meta.env.SMTP_PASS;
+    
+    if (!smtpUser || !smtpPass) {
       console.error("Faltan credenciales SMTP en las variables de entorno");
       return new Response(
         JSON.stringify({ 
@@ -209,8 +212,8 @@ export const POST: APIRoute = async ({ request }) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: import.meta.env.SMTP_USER,
-        pass: import.meta.env.SMTP_PASS,
+        user: smtpUser,
+        pass: smtpPass,
       },
     });
 
@@ -284,8 +287,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Enviar correo al administrador
     await transporter.sendMail({
-      from: `"Formulario Web PROFUSO" <${import.meta.env.SMTP_USER}>`,
-      to: import.meta.env.ADMIN_EMAIL || "piposanchezman@gmail.com",
+      from: `"Formulario Web PROFUSO" <${smtpUser}>`,
+      to: process.env.ADMIN_EMAIL || import.meta.env.ADMIN_EMAIL || "piposanchezman@gmail.com",
       replyTo: email,
       subject: `🔔 Nuevo Contacto Web${service ? ` - ${service}` : ''}`,
       html: createEmailTemplate(adminContent, true),
@@ -293,7 +296,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Enviar correo de confirmación al cliente
     await transporter.sendMail({
-      from: `"PROFUSO" <${import.meta.env.SMTP_USER}>`,
+      from: `"PROFUSO" <${smtpUser}>`,
       to: email,
       subject: "Gracias por contactar a PROFUSO",
       html: createEmailTemplate(clientContent, false),
