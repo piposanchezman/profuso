@@ -1,0 +1,114 @@
+---
+import { Icon } from "@iconify/react";
+
+const year = 2019;
+---
+
+<section
+  id="about"
+  class="relative flex flex-col items-center justify-center min-h-dvh py-16 sm:py-20 md:py-24 lg:py-32 bg-linear-to-b from-background to-background/90 text-white overflow-hidden"
+  aria-label="Sección sobre nosotros"
+>
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-12 space-y-16">
+    {/* Título */}
+    <h2
+      data-animate="fade-up"
+      class="text-center text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-teal-400"
+    >
+      QUIÉNES SOMOS
+    </h2>
+
+    {/* Contenido */}
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      {/* Lado izquierdo */}
+      <div
+        data-animate="fade-right"
+        class="relative rounded-2xl overflow-hidden sm:aspect-square md:aspect-video aspect-4/3 bg-linear-to-br from-blue-600/20 to-teal-600/20 shadow-inner flex items-center justify-center"
+      >
+        <div class="flex flex-col items-center justify-center text-center h-full">
+          <div class="text-[clamp(4rem,10vw,8rem)] font-extrabold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-teal-400 leading-none">
+            {year}
+          </div>
+          <p class="text-lg text-gray-300 max-w-xs mx-auto leading-relaxed mt-4">
+            Desde este año brindamos soluciones integrales para el desarrollo
+            sostenible.
+          </p>
+        </div>
+      </div>
+      {/* Lado derecho */}
+      <div
+        data-animate="fade-left"
+        class="space-y-6 text-gray-300 leading-relaxed text-left"
+      >
+        <h3 class="text-2xl sm:text-3xl font-semibold text-white">
+          PROFUSO
+        </h3>
+
+        <p>
+          Desde <strong>{year}</strong>, PROFUSO ha liderado el desarrollo de
+          soluciones integrales para proyectos industriales, urbanos y rurales en
+          toda Colombia.
+        </p>
+
+        <p>
+          Nuestra misión es ofrecer servicios de alta calidad en
+          <span class="text-yellow-400 font-semibold"> energía</span>,
+          <span class="text-teal-400 font-semibold"> telecomunicaciones</span> y
+          <span class="text-sky-400 font-semibold"> agua</span>, asegurando la
+          satisfacción de nuestros clientes y promoviendo la sostenibilidad.
+        </p>
+
+        {/* Lista de valores */}
+        <ul class="flex flex-col gap-4">
+          <li
+            data-animate="fade-up"
+            class="flex items-center gap-4 group transition-transform hover:translate-x-1"
+          >
+            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+              <Icon
+                icon="mdi:earth"
+                className="w-6 h-6 text-blue-400 group-hover:text-blue-300"
+                client:load
+              />
+            </div>
+            <span class="text-gray-300 group-hover:text-white transition-colors text-lg">
+              Cobertura a nivel nacional
+            </span>
+          </li>
+
+          <li
+            data-animate="fade-up"
+            class="flex items-center gap-4 group transition-transform hover:translate-x-1"
+          >
+            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
+              <Icon
+                icon="solar:bolt-circle-linear"
+                className="w-6 h-6 text-green-400 group-hover:text-green-300"
+                client:load
+              />
+            </div>
+            <span class="text-gray-300 group-hover:text-white transition-colors text-lg">
+              Soluciones energéticas eficientes
+            </span>
+          </li>
+
+          <li
+            data-animate="fade-up"
+            class="flex items-center gap-4 group transition-transform hover:translate-x-1"
+          >
+            <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors">
+              <Icon
+                icon="ph:drop-duotone"
+                className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300"
+                client:load
+              />
+            </div>
+            <span class="text-gray-300 group-hover:text-white transition-colors text-lg">
+              Gestión integral del agua
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

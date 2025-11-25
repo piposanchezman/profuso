@@ -1,0 +1,56 @@
+---
+import Layout from "@layouts/Main.astro";
+import Hero from "@components/sections/Hero.astro";
+import About from "@components/sections/About.astro";
+import Services from "@components/sections/Services";
+import Projects from "@components/sections/Projects";
+import Contact from "@components/sections/Contact";
+---
+<Layout title="PROFUSO - Soluciones Integrales">
+  <!-- Loader general -->
+  <div id="page-loader" class="fixed inset-0 z-50 bg-gray-900 flex items-center justify-center">
+    <img 
+      src="/profuso-circle.webp" 
+      alt="Cargando..." 
+      class="w-24 h-24 animate-spin"
+    />
+  </div>
+  
+  <div id="page-content">
+    <Hero />
+    <About client:idle />
+    <Services client:idle/>
+    <Projects client:idle/>
+    <Contact client:idle/>
+  </div>
+  
+  <!-- Scripts de animaciones y carga de página -->
+  <script>
+    import '@scripts/scroll-animations';
+    import '@scripts/page-loader';
+  </script>
+
+  <style>
+    #page-loader {
+      transition: opacity 0.3s ease-out;
+    }
+    
+    /* Bloquear scroll mientras el loader está activo */
+    body:has(#page-loader:not([style*="display: none"])) {
+      overflow: hidden;
+    }
+    
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</Layout>

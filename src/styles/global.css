@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* Forzar el modo oscuro en el navegador */
+:root {
+  color-scheme: dark;
+}
+
+/* Estilos base */
+body {
+  @apply bg-gray-900 text-gray-100 antialiased;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Animaciones y utilidades extra */
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 6s linear infinite;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Estado inicial */
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Entrada */
+  .animate-in {
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1) !important;
+  }
+
+  /* Salida */
+  .animate-out {
+    opacity: 0 !important;
+    transform: translateY(30px) scale(0.95) !important;
+  }
+
+  /* Variantes según tipo */
+  [data-animate="fade-up"] {
+    transform: translateY(40px);
+  }
+  [data-animate="fade-down"] {
+    transform: translateY(-40px);
+  }
+  [data-animate="fade-left"] {
+    transform: translateX(-40px);
+  }
+  [data-animate="fade-right"] {
+    transform: translateX(40px);
+  }
+  [data-animate="zoom-in"] {
+    transform: scale(0.9);
+  }
+  [data-animate="zoom-out"] {
+    transform: scale(1.1);
+  }
+}
+
+/* FLIP CARD */
+.flip-container {
+  perspective: 1200px;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+/* Rotación al hacer hover */
+.flip-container:hover .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.flip-front {
+  /* Cara frontal: sin rotación extra */
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}

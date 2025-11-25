@@ -1,0 +1,37 @@
+{
+  "name": "profuso",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.1",
+    "@astrojs/react": "^4.4.2",
+    "@clerk/astro": "^2.16.3",
+    "@hookform/resolvers": "^5.2.2",
+    "@iconify/react": "^6.0.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.0",
+    "mongodb": "^6.21.0",
+    "nodemailer": "^7.0.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-easy-crop": "^5.5.5",
+    "react-hook-form": "^7.66.1",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.17",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "@types/nodemailer": "^7.0.4",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.23.0+sha512.21c4e5698002ade97e4efe8b8b4a89a8de3c85a37919f957e7a0f30f38fbc5bbdd05980ffe29179b2fb6e6e691242e098d945d1601772cad0fef5fb6411e2a4b"
+}

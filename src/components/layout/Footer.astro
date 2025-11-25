@@ -1,0 +1,29 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="fixed bottom-0 z-20 w-full border-t-2 bg-gray-900/95 backdrop-blur-xl border-gray-800">
+  <div class="grid grid-cols-2 lg:grid-cols-3 items-center gap-4 h-16 md:h-20 lg:h-24 px-4 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+
+    <!-- Logo -->
+    <a href="/#hero" class="flex items-center">
+      <img 
+        src="/sociedades-bic.webp" 
+        alt="Sociedades BIC"
+        class="h-10 md:h-12 lg:h-14 xl:h-16 w-auto transition-transform hover:scale-105"
+      />
+    </a>
+
+    <!-- Slogan -->
+    <div class="hidden lg:flex flex-col text-center text-sm xl:text-base leading-relaxed">
+      <p class="text-gray-200">Soluciones integrales para proyectos</p>
+      <p class="text-gray-200">industriales, urbanos y rurales.</p>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-xs md:text-sm lg:text-base text-right leading-relaxed">
+      <p class="text-gray-100">© {currentYear} <span class="font-bold text-white">PROFUSO</span></p>
+      <p class="text-gray-400 text-xs md:text-sm">Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>

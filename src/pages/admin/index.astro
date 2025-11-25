@@ -1,0 +1,12 @@
+---
+import Layout from '@layouts/Admin.astro'
+import AdminDashboard from '@components/admin/AdminDashboard'
+const { isAuthenticated } = Astro.locals.auth()
+
+if (!isAuthenticated) Astro.redirect('/login')
+---
+
+<Layout title="Panel de Administración - PROFUSO">
+  <!-- Componente React de administración -->
+  <AdminDashboard client:load />
+</Layout>

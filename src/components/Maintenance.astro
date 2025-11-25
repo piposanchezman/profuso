@@ -1,0 +1,62 @@
+---
+const contactInfo = [
+  {
+    icon: "mdi:phone",
+    title: "Teléfono",
+    content: "320 855 4400",
+  },
+  {
+    icon: "mdi:email-outline",
+    title: "Correo electrónico",
+    content: "contratacion@profuso.co",
+  },
+];
+
+const socialLinks = [
+  { name: "Facebook", color: "hover:bg-blue-600", icon: "mdi:facebook", url: "#" },
+  { name: "Instagram", color: "hover:bg-pink-600", icon: "mdi:instagram", url: "#" },
+];
+---
+
+<div class="fixed inset-0 flex flex-col items-center justify-center bg-gray-900 text-white p-6 z-9999">
+  <!-- Logo -->
+  <img src="/profuso-circle.webp" alt="Logo" class="w-28 h-28 mb-6 animate-pulse" />
+
+  <!-- Título -->
+  <h1 class="text-3xl font-bold mb-4 text-center">Sitio en Mantenimiento</h1>
+  <p class="text-lg text-gray-300 max-w-lg mb-10 text-center">
+    Estamos realizando mejoras para brindarte un mejor servicio.  
+    Mientras tanto, puedes comunicarte con nosotros:
+  </p>
+
+  <!-- Contacto alineado a la izquierda -->
+  <div class="w-full max-w-md flex flex-col gap-6 mb-8">
+    {contactInfo.map((item) => (
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+          <span class="iconify w-6 h-6 text-blue-400" data-icon={item.icon}></span>
+        </div>
+        <div class="text-left">
+          <p class="text-sm text-gray-400">{item.title}</p>
+          <p class="text-base font-medium">{item.content}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Redes sociales centradas -->
+  <div class="flex justify-center gap-4">
+    {socialLinks.map((social) => (
+      <a
+        href={social.url}
+        class={`w-10 h-10 rounded-full bg-gray-700/50 flex items-center justify-center text-white text-xl transition-all ${social.color} hover:scale-110`}
+        title={social.name}
+      >
+        <span class="iconify w-6 h-6" data-icon={social.icon}></span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<!-- Iconify CDN para los íconos -->
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>

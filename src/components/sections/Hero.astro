@@ -1,0 +1,89 @@
+---
+---
+<section
+  id="hero"
+  class="relative flex flex-col items-center justify-center text-center text-white min-h-dvh overflow-hidden py-16 sm:py-20 md:py-24 lg:py-32"
+  aria-label="Sección principal de presentación de PROFUSO"
+>
+  <!-- Fondos decorativos animados -->
+  <div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-88 sm:w-104 h-88 sm:h-104 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 sm:w-96 h-80 sm:h-96 bg-cyan-400/25 rounded-full blur-3xl animate-pulse delay-700"></div>
+    <div class="absolute top-1/2 right-1/3 w-72 sm:w-88 h-72 sm:h-88 bg-yellow-400/25 rounded-full blur-3xl animate-pulse delay-1000"></div>
+  </div>
+
+  <!-- Encabezado -->
+  <header data-animate class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-12 space-y-4 sm:space-y-6">
+    <h1
+      class="text-[clamp(2rem,6vw,4.5rem)] font-extrabold leading-tight tracking-tight"
+    >
+      <span
+        class="bg-clip-text text-transparent bg-linear-to-r from-blue-400 via-cyan-400 to-green-400 block"
+      >
+        PROFUSO
+      </span>
+      <span class="text-gray-200 font-bold uppercase block">
+        Soluciones Integrales
+      </span>
+    </h1>
+
+    <p
+      class="text-[clamp(1rem,2.5vw,1.4rem)] text-gray-300 max-w-3xl mx-auto leading-relaxed px-2 text-balance"
+    >
+      Desde 2019 brindando soluciones en
+      <span class="text-yellow-400 font-semibold">energía</span>,
+      <span class="text-teal-400 font-semibold">telecomunicaciones</span> y
+      <span class="text-sky-400 font-semibold">agua</span>
+      para proyectos industriales, urbanos y rurales.
+    </p>
+  </header>
+
+  <!-- Botones CTA -->
+  <nav
+    data-animate
+    class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center px-4"
+  >
+    <a
+      href="#services"
+      aria-label="Ver los servicios de PROFUSO"
+      class="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-white bg-linear-to-r from-blue-600 to-cyan-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black"
+    >
+      Nuestros Servicios →
+    </a>
+
+    <a
+      href="#contact"
+      aria-label="Ir a la sección de contacto"
+      class="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-white border border-white/30 bg-white/5 hover:bg-white/10 backdrop-blur-sm hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-black"
+    >
+      Contáctanos
+    </a>
+  </nav>
+
+  <!-- Indicador de scroll -->
+  <div
+    data-animate
+    class="mt-16 sm:mt-20 flex justify-center"
+  >
+    <a
+      href="#about"
+      aria-label="Desplazarse a la siguiente sección"
+      class="group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/30 bg-white/10 hover:bg-white/20 transition animate-bounce focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 text-white/70 group-hover:text-white transition-colors"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </a>
+  </div>
+</section>
