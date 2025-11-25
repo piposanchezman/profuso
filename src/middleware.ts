@@ -3,8 +3,8 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server';
 const isProtectedRoute = createRouteMatcher(['/admin(.*)']);
 
 // Variables de entorno para organización y rol permitidos
-const allowedOrgId = import.meta.env.CLERK_ALLOWED_ORG_ID;
-const allowedRole = import.meta.env.CLERK_ALLOWED_ROLE;
+const allowedOrgId = process.env.CLERK_ALLOWED_ORG_ID || import.meta.env.CLERK_ALLOWED_ORG_ID;
+const allowedRole = process.env.CLERK_ALLOWED_ROLE || import.meta.env.CLERK_ALLOWED_ROLE;
 
 export const onRequest = clerkMiddleware((auth, context) => {
   const user = auth();
@@ -22,9 +22,6 @@ export const onRequest = clerkMiddleware((auth, context) => {
 
   // Extraer organización y rol del usuario
   const { orgId, orgRole } = user;
-
-  // Debug temporal - eliminar después
-  console.log('Usuario autenticado:', { orgId, orgRole, allowedOrgId, allowedRole });
 
   // Verificar existencia de organización y rol
   if (!orgId || !orgRole) {
