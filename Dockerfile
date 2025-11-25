@@ -24,6 +24,18 @@ RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm ins
 # ============================================
 FROM base AS builder
 
+# Argumentos de build para variables públicas de Clerk
+ARG PUBLIC_CLERK_PUBLISHABLE_KEY
+ARG CLERK_SECRET_KEY
+ARG PUBLIC_CLERK_SIGN_IN_URL
+ARG PUBLIC_CLERK_SIGN_UP_URL
+
+# Establecer variables de entorno para el build
+ENV PUBLIC_CLERK_PUBLISHABLE_KEY=$PUBLIC_CLERK_PUBLISHABLE_KEY
+ENV CLERK_SECRET_KEY=$CLERK_SECRET_KEY
+ENV PUBLIC_CLERK_SIGN_IN_URL=$PUBLIC_CLERK_SIGN_IN_URL
+ENV PUBLIC_CLERK_SIGN_UP_URL=$PUBLIC_CLERK_SIGN_UP_URL
+
 # Copiar dependencias instaladas
 COPY --from=deps /app/node_modules ./node_modules
 
