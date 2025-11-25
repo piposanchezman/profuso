@@ -23,6 +23,9 @@ export const onRequest = clerkMiddleware((auth, context) => {
   // Extraer organización y rol del usuario
   const { orgId, orgRole } = user;
 
+  // Debug temporal - eliminar después
+  console.log('Usuario autenticado:', { orgId, orgRole, allowedOrgId, allowedRole });
+
   // Verificar existencia de organización y rol
   if (!orgId || !orgRole) {
     return new Response('Acceso restringido: falta rol u organización', { status: 403 });
