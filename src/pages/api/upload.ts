@@ -18,7 +18,14 @@ export const POST: APIRoute = async ({ request }) => {
 
   } catch (error) {
     console.error("UPLOAD ERROR:", error);
-    return new Response(JSON.stringify({ error: "Upload failed" }), { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Upload failed";
+    return new Response(
+      JSON.stringify({ 
+        error: "Upload failed", 
+        details: errorMessage 
+      }), 
+      { status: 500 }
+    );
   }
 };
 
@@ -30,6 +37,13 @@ export const DELETE: APIRoute = async ({ request }) => {
 
   } catch (error) {
     console.error("DELETE IMAGE ERROR:", error);
-    return new Response(JSON.stringify({ error: "Delete failed" }), { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Delete failed";
+    return new Response(
+      JSON.stringify({ 
+        error: "Delete failed", 
+        details: errorMessage 
+      }), 
+      { status: 500 }
+    );
   }
 };

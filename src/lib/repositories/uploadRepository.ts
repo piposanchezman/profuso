@@ -30,14 +30,21 @@ export async function uploadImage({
   // Convertimos Blob a Buffer
   const buffer = Buffer.from(await blob.arrayBuffer());
 
-  // Ruta destino
-  const uploadDir = path.join(process.cwd(), "public", "uploads", context);
-  if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+  // Ruta destino - Ajustada para Docker
+  // En Docker: /app/dist/client/uploads
+  // En desarrollo: public/uploads
+  const baseDir = fs.existsSync(path.join(process.cwd(), "dist", "client"))
+    ? path.join(process.cwd(), "dist", "client", "uploads", context)
+    : path.join(process.cwd(), "public", "uploads", context);
+    
+  if (!fs.existsSync(baseDir)) {
+    fs.mkdirSync(baseDir, { recursive: true });
+  }
 
   // Nombre seguro y único
   const safeName = normalizeFilename(name);
   const filename = `${safeName}-${Date.now()}.webp`;
-  const filepath = path.join(uploadDir, filename);
+  const filepath = path.join(baseDir, filename);
 
   // Sharp → convertir a WebP comprimido
   await sharp(buffer)
@@ -56,8 +63,18 @@ export async function uploadImage({
 export async function deleteImage(url: string): Promise<void> {
   if (!url) return;
 
-  const filePath = path.join(process.cwd(), "public", url.replace(/^\/+/, ""));
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
+  // Intentar eliminar de ambas ubicaciones posibles
+  const urlPath = url.replace(/^\/+/, "");
+  
+  // Ruta en desarrollo
+  const devPath = path.join(process.cwd(), "public", urlPath);
+  
+  // Ruta en Docker/producción
+  const prodPath = path.join(process.cwd(), "dist", "client", urlPath);
+  
+  if (fs.existsSync(devPath)) {
+    fs.unlinkSync(devPath);
+  } else if (fs.existsSync(prodPath)) {
+    fs.unlinkSync(prodPath);
   }
 }
