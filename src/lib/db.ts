@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion, type Db } from "mongodb";
 
-const uri = import.meta.env.MONGODB_URI;
-const dbName = import.meta.env.MONGODB_DB_NAME ?? "profuso";
+const uri = process.env.MONGODB_URI || import.meta.env.MONGODB_URI;
+const dbName = process.env.MONGODB_DB_NAME || import.meta.env.MONGODB_DB_NAME || "profuso";
 
 if (!uri) {
   throw new Error("MONGODB_URI is not set in .env");
