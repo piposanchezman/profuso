@@ -8,6 +8,48 @@ interface IconSearchProps {
   placeholder?: string;
 }
 
+// Iconos populares por categoría como fallback
+const POPULAR_ICONS = {
+  social: [
+    "mdi:facebook", "mdi:instagram", "mdi:twitter", "mdi:linkedin",
+    "mdi:youtube", "mdi:whatsapp", "mdi:telegram", "mdi:tiktok",
+    "mdi:github", "mdi:pinterest", "mdi:snapchat", "mdi:discord",
+    "mdi:reddit", "mdi:tumblr", "mdi:twitch", "mdi:vimeo",
+    "simple-icons:facebook", "simple-icons:instagram", "simple-icons:twitter", "simple-icons:linkedin",
+    "simple-icons:youtube", "simple-icons:whatsapp", "simple-icons:telegram", "simple-icons:tiktok",
+    "fa-brands:facebook", "fa-brands:instagram", "fa-brands:twitter", "fa-brands:linkedin"
+  ],
+  contact: [
+    "mdi:phone", "mdi:email", "mdi:map-marker", "mdi:web",
+    "mdi:cellphone", "mdi:home", "mdi:office-building", "mdi:fax",
+    "mdi:message", "mdi:chat", "mdi:email-outline", "mdi:phone-classic",
+    "mdi:clock", "mdi:map", "mdi:at", "mdi:domain",
+    "mdi:phone-outline", "mdi:map-marker-outline", "mdi:web-box",
+    "heroicons:phone", "heroicons:envelope", "heroicons:map-pin",
+    "ic:baseline-phone", "ic:baseline-email", "ic:baseline-location-on"
+  ],
+  default: [
+    "mdi:account", "mdi:heart", "mdi:star", "mdi:check",
+    "mdi:close", "mdi:menu", "mdi:home", "mdi:search",
+    "mdi:settings", "mdi:information", "mdi:help", "mdi:calendar",
+    "mdi:shopping", "mdi:cart", "mdi:bookmark", "mdi:tag",
+    "mdi:pencil", "mdi:delete", "mdi:plus", "mdi:minus",
+    "heroicons:home", "heroicons:user", "heroicons:cog", "heroicons:search"
+  ]
+};
+
+// Función helper para determinar la categoría basada en el string
+function getCategoryFromString(categoryStr: string): keyof typeof POPULAR_ICONS {
+  const lower = categoryStr.toLowerCase();
+  if (lower.includes('social') || lower.includes('media') || lower.includes('brand')) {
+    return 'social';
+  }
+  if (lower.includes('contact') || lower.includes('communication')) {
+    return 'contact';
+  }
+  return 'default';
+}
+
 export default function IconSearch({
   selectedIcon,
   onSelectIcon,
@@ -18,30 +60,86 @@ export default function IconSearch({
   const [icons, setIcons] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // Mostrar iconos populares cuando no hay búsqueda
+  useEffect(() => {
+    if (searchTerm.length === 0) {
+      const popularCategory = getCategoryFromString(category);
+      setIcons(POPULAR_ICONS[popularCategory]);
+    }
+  }, [searchTerm, category]);
+
   // Búsqueda de iconos usando la API de Iconify
   useEffect(() => {
     const searchIcons = async () => {
       if (searchTerm.length < 2) {
-        setIcons([]);
         return;
       }
 
       setLoading(true);
       try {
-        // Usar la API de Iconify para buscar iconos
+        // Primero intentar búsqueda local en iconos populares
+        const allIcons = [...POPULAR_ICONS.social, ...POPULAR_ICONS.contact, ...POPULAR_ICONS.default];
+        const localResults = allIcons.filter(icon => 
+          icon.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        // Si hay resultados locales, usarlos primero
+        if (localResults.length > 0) {
+          setIcons(localResults);
+          setLoading(false);
+          return;
+        }
+
+        // Intentar con la API de Iconify
         const query = category ? `${category} ${searchTerm}` : searchTerm;
         const response = await fetch(
-          `https://api.iconify.design/search?query=${encodeURIComponent(query)}&limit=48`
+          `https://api.iconify.design/search?query=${encodeURIComponent(query)}&limit=48`,
+          { signal: AbortSignal.timeout(5000) } // Timeout de 5 segundos
         );
-        const data = await response.json();
-
-        if (data.icons) {
-          // Formatear los iconos como "prefix:name"
-          const iconList = data.icons.map((icon: string) => icon);
-          setIcons(iconList);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const data = await response.json();
+        console.log("Respuesta de la API:", data);
+
+        // La API devuelve diferentes formatos dependiendo de la versión
+        let iconList: string[] = [];
+        
+        if (Array.isArray(data.icons)) {
+          iconList = data.icons;
+        } else if (data.icons && typeof data.icons === 'object') {
+          // Si es un objeto, combinar todos los arrays de diferentes colecciones
+          iconList = Object.entries(data.icons).flatMap(([prefix, icons]: [string, any]) => {
+            if (Array.isArray(icons)) {
+              return icons.map(icon => `${prefix}:${icon}`);
+            }
+            return [];
+          });
+        } else if (data.iconify) {
+          // Formato alternativo de la API
+          iconList = Object.entries(data.iconify).flatMap(([prefix, icons]: [string, any]) => {
+            if (Array.isArray(icons)) {
+              return icons.map(icon => `${prefix}:${icon}`);
+            }
+            return [];
+          });
+        }
+        
+        // Combinar resultados de API con resultados locales
+        setIcons([...localResults, ...iconList].slice(0, 48));
       } catch (error) {
         console.error("Error buscando iconos:", error);
+        
+        // Fallback a búsqueda local más amplia
+        const allIcons = [...POPULAR_ICONS.social, ...POPULAR_ICONS.contact, ...POPULAR_ICONS.default];
+        const localResults = allIcons.filter(icon => {
+          const iconName = icon.split(':')[1] || icon;
+          return iconName.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        
+        setIcons(localResults.length > 0 ? localResults : []);
       } finally {
         setLoading(false);
       }
@@ -131,11 +229,10 @@ export default function IconSearch({
       )}
 
       {/* Ayuda */}
-      {searchTerm.length === 0 && (
-        <div className="text-center py-6 text-gray-500 text-sm">
-          <Icon icon="mdi:information-outline" className="w-8 h-8 mx-auto mb-2" />
-          <p>Escribe para buscar iconos</p>
-          <p className="text-xs mt-1">Ejemplo: "facebook", "email", "phone"</p>
+      {searchTerm.length === 0 && icons.length > 0 && (
+        <div className="text-center py-2 text-gray-500 text-sm">
+          <Icon icon="mdi:information-outline" className="w-6 h-6 mx-auto mb-2" />
+          <p>Iconos populares o escribe para buscar más</p>
         </div>
       )}
     </div>
