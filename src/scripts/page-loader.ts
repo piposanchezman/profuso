@@ -61,8 +61,9 @@ function areReactComponentsLoaded(): boolean {
   const servicesSection = document.querySelector('#services');
   const projectsSection = document.querySelector('#projects');
   const contactSection = document.querySelector('#contact');
+  const pqrsSection = document.querySelector('#pqrs');
 
-  if (!servicesSection || !projectsSection || !contactSection) {
+  if (!servicesSection || !projectsSection || !contactSection || !pqrsSection) {
     return false;
   }
 
@@ -72,8 +73,9 @@ function areReactComponentsLoaded(): boolean {
     const servicesHasCards = servicesSection.querySelector('.flip-container') !== null;
     const projectsHasCards = projectsSection.querySelector('[data-animate="zoom-in"]') !== null;
     const contactHasForm = contactSection.querySelector('form') !== null;
+    const pqrsHasForm = pqrsSection.querySelector('form') !== null;
 
-    return servicesHasCards && projectsHasCards && contactHasForm;
+    return servicesHasCards && projectsHasCards && contactHasForm && pqrsHasForm;
   } catch (error) {
     // Si hay un error durante la verificación, asumir que aún no está listo
     return false;
@@ -91,8 +93,8 @@ function scrollToSection(hash: string): void {
     return;
   }
 
-  // Delay adicional para Contact para asegurar altura final
-  const scrollDelay = hash === '#contact' 
+  // Delay adicional para Contact y PQRs para asegurar altura final
+  const scrollDelay = (hash === '#contact' || hash === '#pqrs')
     ? CONFIG.SCROLL_DELAY_CONTACT 
     : CONFIG.SCROLL_DELAY_DEFAULT;
 
